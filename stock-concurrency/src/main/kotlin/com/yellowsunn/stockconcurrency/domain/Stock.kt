@@ -4,6 +4,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.Version
 
 @Entity
 class Stock(
@@ -16,6 +17,9 @@ class Stock(
 
     var quantity: Long = quantity
         private set
+
+    @Version
+    private val version: Long? = null
 
     fun decrease(quantity: Long) {
         if (this.quantity < quantity) {

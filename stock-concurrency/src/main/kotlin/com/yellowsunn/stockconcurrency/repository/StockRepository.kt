@@ -9,4 +9,7 @@ interface StockRepository : JpaRepository<Stock, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     fun findPessimisticLockStockById(id: Long): Stock?
+
+    @Lock(LockModeType.OPTIMISTIC)
+    fun findOptimisticLockStockById(id: Long): Stock?
 }
