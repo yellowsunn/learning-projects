@@ -9,3 +9,5 @@ spring:
     username: root
     password: password
     url: jdbc:mysql://localhost:3306/stock_example
+    hikari:
+      maximum-pool-size: 40
