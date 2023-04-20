@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 @RestController
 class HelloController {
 
-    @RateLimiter(burstCapacity = 10, replenishTime = 5, timeUnit = TimeUnit.SECONDS)
+    @RateLimiter(burstCapacity = 10, replenishTime = 60, timeUnit = TimeUnit.SECONDS)
     @GetMapping("/hello")
     fun hello(): String {
         return "hello"
