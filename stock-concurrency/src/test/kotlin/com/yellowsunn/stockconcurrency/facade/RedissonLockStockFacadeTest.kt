@@ -7,19 +7,19 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class LettuceLockStockFacadeTest {
+class RedissonLockStockFacadeTest {
     @Autowired
     lateinit var stockRepository: StockRepository
 
     @Autowired
-    lateinit var stockFacade: LettuceLockStockFacade
+    lateinit var stockFacade: RedissonLockStockFacade
 
     var stockId: Long = 0L
 
@@ -36,7 +36,7 @@ class LettuceLockStockFacadeTest {
     }
 
     @Test
-    fun 동시에_100개_요청_간단한_Lettuce_스핀락으로_정상작동() {
+    fun 동시에_100개_요청_Redisson_분산락으로_정상작동() {
         // given
         val threadCount = 100
         val executorService: ExecutorService = Executors.newFixedThreadPool(32)
