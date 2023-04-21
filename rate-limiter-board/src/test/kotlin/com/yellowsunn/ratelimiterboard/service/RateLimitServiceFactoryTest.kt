@@ -1,6 +1,10 @@
 package com.yellowsunn.ratelimiterboard.service
 
 import com.yellowsunn.ratelimiterboard.IntegrationTest
+import com.yellowsunn.ratelimiterboard.service.ratelimit.RateLimitAllService
+import com.yellowsunn.ratelimiterboard.service.ratelimit.RateLimitIpService
+import com.yellowsunn.ratelimiterboard.service.ratelimit.RateLimitService
+import com.yellowsunn.ratelimiterboard.service.ratelimit.RateLimitServiceFactory
 import com.yellowsunn.ratelimiterboard.utils.RateLimiterType
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test

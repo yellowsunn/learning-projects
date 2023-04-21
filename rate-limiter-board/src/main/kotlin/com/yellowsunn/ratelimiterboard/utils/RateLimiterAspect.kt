@@ -1,7 +1,6 @@
 package com.yellowsunn.ratelimiterboard.utils
 
-import com.yellowsunn.ratelimiterboard.service.RateLimitService
-import com.yellowsunn.ratelimiterboard.service.RateLimitServiceFactory
+import com.yellowsunn.ratelimiterboard.facade.ratelimit.RateLimitFacade
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
@@ -12,7 +11,7 @@ import java.time.Duration
 @Aspect
 @Component
 class RateLimiterAspect(
-    private val rateLimitServiceFactory: RateLimitServiceFactory,
+    private val rateLimitFacade: RateLimitFacade,
 ) {
     @Around("@annotation(RateLimiter)")
     fun limitRequestRate(joinPoint: ProceedingJoinPoint): Any? {
@@ -26,8 +25,9 @@ class RateLimiterAspect(
 
     @Around("@annotation(RateLimiters)")
     fun limitMultipleRequestRate(joinPoint: ProceedingJoinPoint): Any? {
-        val rateLimiters: Array<RateLimiter> = (joinPoint.signature as MethodSignature).method
+        val rateLimiters: List<RateLimiter> = (joinPoint.signature as MethodSignature).method
             .getAnnotation(RateLimiters::class.java).value
+            .sortedBy { it.type.order }
 
         rateLimiters.forEach {
             decreaseRateLimitToken(it)
@@ -39,11 +39,10 @@ class RateLimiterAspect(
     private fun decreaseRateLimitToken(rateLimiter: RateLimiter) {
         val replenishDuration = Duration.of(rateLimiter.replenishTime, rateLimiter.timeUnit.toChronoUnit())
 
-        val rateLimitService: RateLimitService = rateLimitServiceFactory.get(rateLimiter.type)
-
-        rateLimitService.decreaseToken(
+        rateLimitFacade.decreaseToken(
             burstCapacity = rateLimiter.burstCapacity,
             duration = replenishDuration,
+            type = rateLimiter.type,
         )
     }
 }

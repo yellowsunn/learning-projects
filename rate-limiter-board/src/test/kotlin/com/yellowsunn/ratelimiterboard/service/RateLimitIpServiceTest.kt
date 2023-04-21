@@ -2,6 +2,7 @@ package com.yellowsunn.ratelimiterboard.service
 
 import com.yellowsunn.ratelimiterboard.IntegrationTest
 import com.yellowsunn.ratelimiterboard.const.X_FORWARDED_FOR
+import com.yellowsunn.ratelimiterboard.service.ratelimit.RateLimitIpService
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -28,7 +29,8 @@ class RateLimitIpServiceTest : IntegrationTest() {
     @Test
     fun IP_처리율_제한장치_토큰_감소() {
         // when
-        val isSuccess = sut.decreaseToken(burstCapacity = 10, duration = Duration.ofSeconds(5L))
+        val isSuccess =
+            sut.decreaseToken(key = sut.getRequestKey(), burstCapacity = 10, duration = Duration.ofSeconds(5L))
 
         // then
         isSuccess shouldBe true

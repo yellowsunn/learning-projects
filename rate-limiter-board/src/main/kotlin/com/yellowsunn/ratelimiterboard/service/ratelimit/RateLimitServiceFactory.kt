@@ -1,4 +1,4 @@
-package com.yellowsunn.ratelimiterboard.service
+package com.yellowsunn.ratelimiterboard.service.ratelimit
 
 import com.yellowsunn.ratelimiterboard.utils.RateLimiterType
 import org.springframework.stereotype.Component
