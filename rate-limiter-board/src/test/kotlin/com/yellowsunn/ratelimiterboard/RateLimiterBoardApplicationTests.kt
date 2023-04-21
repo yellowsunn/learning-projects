@@ -1,10 +1,8 @@
 package com.yellowsunn.ratelimiterboard
 
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest
-class RateLimiterBoardApplicationTests {
+class RateLimiterBoardApplicationTests : IntegrationTest() {
 
     @Test
     fun contextLoads() {

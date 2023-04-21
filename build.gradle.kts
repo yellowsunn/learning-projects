@@ -33,6 +33,9 @@ subprojects {
         implementation("org.springframework.boot:spring-boot-starter")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
+        testImplementation("io.kotest:kotest-runner-junit5:5.6.1")
+        testImplementation("io.kotest:kotest-assertions-core:5.6.1")
+        testImplementation("io.mockk:mockk:1.13.4")
     }
 
     tasks.withType<KotlinCompile> {
