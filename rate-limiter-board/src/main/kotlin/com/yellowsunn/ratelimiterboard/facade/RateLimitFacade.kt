@@ -1,4 +1,4 @@
-package com.yellowsunn.ratelimiterboard.facade.ratelimit
+package com.yellowsunn.ratelimiterboard.facade
 
 import com.yellowsunn.ratelimiterboard.service.ratelimit.RateLimitService
 import com.yellowsunn.ratelimiterboard.service.ratelimit.RateLimitServiceFactory

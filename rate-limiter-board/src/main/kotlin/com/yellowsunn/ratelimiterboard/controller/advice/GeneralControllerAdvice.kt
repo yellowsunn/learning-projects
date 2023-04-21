@@ -14,7 +14,7 @@ class GeneralControllerAdvice {
     private val log: Logger = LoggerFactory.getLogger(this::class.java)
 
     @ExceptionHandler(RateLimitException::class)
-    protected fun handleIllegalArgumentException(e: RateLimitException): ResponseEntity<Boolean> {
+    protected fun handleIllegalArgumentException(e: RateLimitException): ResponseEntity<String> {
         log.warn("message={}", e.message)
 
         val headers = HttpHeaders().apply {
@@ -24,6 +24,6 @@ class GeneralControllerAdvice {
         return ResponseEntity
             .status(HttpStatus.TOO_MANY_REQUESTS.value())
             .headers(headers)
-            .body(false)
+            .body("Too many requests.")
     }
 }

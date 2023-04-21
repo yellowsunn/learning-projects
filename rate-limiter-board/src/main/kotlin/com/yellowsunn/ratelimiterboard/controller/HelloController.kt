@@ -16,7 +16,7 @@ class HelloController {
         return "hello"
     }
 
-    @RateLimiter(type = ALL, burstCapacity = 500, replenishTime = 1, timeUnit = TimeUnit.SECONDS)
+    @RateLimiter(type = ALL, burstCapacity = 100, replenishTime = 1, timeUnit = TimeUnit.SECONDS)
     @GetMapping("/hello2")
     fun hello2(): String {
         return "hello2"

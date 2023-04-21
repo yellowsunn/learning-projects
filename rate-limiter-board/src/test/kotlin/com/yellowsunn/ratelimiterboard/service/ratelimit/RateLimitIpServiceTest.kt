@@ -1,8 +1,7 @@
-package com.yellowsunn.ratelimiterboard.service
+package com.yellowsunn.ratelimiterboard.service.ratelimit
 
 import com.yellowsunn.ratelimiterboard.IntegrationTest
 import com.yellowsunn.ratelimiterboard.const.X_FORWARDED_FOR
-import com.yellowsunn.ratelimiterboard.service.ratelimit.RateLimitIpService
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

@@ -1,4 +1,4 @@
-package com.yellowsunn.ratelimiterboard.service
+package com.yellowsunn.ratelimiterboard.service.ratelimit
 
 import com.yellowsunn.ratelimiterboard.IntegrationTest
 import com.yellowsunn.ratelimiterboard.service.ratelimit.RateLimitAllService

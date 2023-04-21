@@ -1,10 +1,9 @@
 package com.yellowsunn.ratelimiterboard.utils
 
-import com.yellowsunn.ratelimiterboard.facade.ratelimit.RateLimitFacade
+import com.yellowsunn.ratelimiterboard.facade.RateLimitFacade
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
-import org.aspectj.lang.reflect.MethodSignature
 import org.springframework.stereotype.Component
 import java.time.Duration
 
@@ -13,26 +12,20 @@ import java.time.Duration
 class RateLimiterAspect(
     private val rateLimitFacade: RateLimitFacade,
 ) {
-    @Around("@annotation(RateLimiter)")
-    fun limitRequestRate(joinPoint: ProceedingJoinPoint): Any? {
-        val rateLimiter: RateLimiter = (joinPoint.signature as MethodSignature).method
-            .getAnnotation(RateLimiter::class.java)
-
+    @Around("@annotation(rateLimiter)")
+    fun limitRequestRate(joinPoint: ProceedingJoinPoint, rateLimiter: RateLimiter): Any? {
         decreaseRateLimitToken(rateLimiter)
-
         return joinPoint.proceed()
     }
 
-    @Around("@annotation(RateLimiters)")
-    fun limitMultipleRequestRate(joinPoint: ProceedingJoinPoint): Any? {
-        val rateLimiters: List<RateLimiter> = (joinPoint.signature as MethodSignature).method
-            .getAnnotation(RateLimiters::class.java).value
+    @Around("@annotation(rateLimiters)")
+    fun limitMultipleRequestRate(joinPoint: ProceedingJoinPoint, rateLimiters: RateLimiters): Any? {
+        val sortedRateLimiters: List<RateLimiter> = rateLimiters.value
             .sortedBy { it.type.order }
 
-        rateLimiters.forEach {
+        sortedRateLimiters.forEach {
             decreaseRateLimitToken(it)
         }
-
         return joinPoint.proceed()
     }
 

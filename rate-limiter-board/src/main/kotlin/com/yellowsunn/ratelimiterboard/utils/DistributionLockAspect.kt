@@ -14,13 +14,9 @@ import java.lang.reflect.Method
 class DistributionLockAspect(
     private val redissonClient: RedissonClient,
 ) {
-    @Around("@annotation(DistributionLock)")
-    fun lockAndUnlock(joinPoint: ProceedingJoinPoint): Any? {
-        val method: Method = (joinPoint.signature as MethodSignature).method
-        val distributionLock: DistributionLock = method.getAnnotation(DistributionLock::class.java)
-
-        val methodName = getMethodName(joinPoint, method)
-        val lockName: String = generateLockName(distributionLock, methodName, joinPoint.args)
+    @Around("@annotation(distributionLock)")
+    fun lockAndUnlock(joinPoint: ProceedingJoinPoint, distributionLock: DistributionLock): Any? {
+        val lockName: String = generateLockName(joinPoint, distributionLock)
 
         val lock: RLock = redissonClient.getLock(lockName)
         try {
@@ -38,16 +34,19 @@ class DistributionLockAspect(
         }
     }
 
-    private fun generateLockName(distributionLock: DistributionLock, methodName: String, args: Array<Any>?): String {
+    private fun generateLockName(joinPoint: ProceedingJoinPoint, distributionLock: DistributionLock): String {
+        val methodName = getFullMethodName(joinPoint)
+
+        // lockName 이 존재하지 않으면 메소드이름과 args의 조합으로 lockName을 생성
         return distributionLock.lockName.ifBlank {
-            val suffix = args?.joinToString(separator = ":") {
-                it.toString()
-            } ?: ""
+            val suffix = joinPoint.args?.joinToString(separator = ":") ?: ""
             return "$methodName:$suffix"
         }
     }
 
-    private fun getMethodName(joinPoint: ProceedingJoinPoint, method: Method): String {
+    private fun getFullMethodName(joinPoint: ProceedingJoinPoint): String {
+        val method: Method = (joinPoint.signature as MethodSignature).method
+
         return "${joinPoint.target.javaClass.name}.${method.name}"
     }
 }

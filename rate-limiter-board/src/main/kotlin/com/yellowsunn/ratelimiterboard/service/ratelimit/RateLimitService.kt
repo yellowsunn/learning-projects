@@ -22,7 +22,7 @@ abstract class RateLimitService(
             ?: redisRateLimitRepository.saveTokenIfAbsent(key, burstCapacity, duration)
 
         if (remainToken <= 0L) {
-            throw RateLimitException(remaing = remainToken, burstCapacity = burstCapacity)
+            throw RateLimitException(key = key, remaing = remainToken, burstCapacity = burstCapacity)
         }
 
         log.info("http 요청 성공. key={}", key)

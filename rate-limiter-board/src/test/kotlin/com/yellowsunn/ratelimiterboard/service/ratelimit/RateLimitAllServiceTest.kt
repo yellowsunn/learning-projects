@@ -1,7 +1,6 @@
-package com.yellowsunn.ratelimiterboard.service
+package com.yellowsunn.ratelimiterboard.service.ratelimit
 
 import com.yellowsunn.ratelimiterboard.IntegrationTest
-import com.yellowsunn.ratelimiterboard.service.ratelimit.RateLimitAllService
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
