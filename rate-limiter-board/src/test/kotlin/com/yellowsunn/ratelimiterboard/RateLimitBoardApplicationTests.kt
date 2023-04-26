@@ -2,7 +2,7 @@ package com.yellowsunn.ratelimiterboard
 
 import org.junit.jupiter.api.Test
 
-class RateLimiterBoardApplicationTests : IntegrationTest() {
+class RateLimitBoardApplicationTests : IntegrationTest() {
 
     @Test
     fun contextLoads() {

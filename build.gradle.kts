@@ -17,6 +17,13 @@ repositories {
     mavenCentral()
 }
 
+allprojects {
+    repositories {
+        mavenCentral()
+        maven("https://jitpack.io")
+    }
+}
+
 subprojects {
     apply(plugin = "kotlin")
     apply(plugin = "org.springframework.boot")

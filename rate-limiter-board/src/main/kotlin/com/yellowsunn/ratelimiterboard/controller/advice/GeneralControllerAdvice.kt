@@ -18,12 +18,11 @@ class GeneralControllerAdvice {
         log.warn("message={}", e.message)
 
         val headers = HttpHeaders().apply {
-            set("X-RateLimit-Remaining", e.remaing.toString())
             set("X-RateLimit-Burst-Capacity", e.burstCapacity.toString())
         }
         return ResponseEntity
             .status(HttpStatus.TOO_MANY_REQUESTS.value())
             .headers(headers)
-            .body("Too many requests.")
+            .build()
     }
 }
