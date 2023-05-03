@@ -1,5 +1,5 @@
 plugins {
-    kotlin("plugin.jpa") version "1.7.22"
+    kotlin("plugin.jpa") version Versions.kotlin
 }
 
 group = "com.yellowsunn"

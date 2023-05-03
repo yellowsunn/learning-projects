@@ -7,14 +7,21 @@ bootJar.enabled = false
 jar.enabled = true
 
 plugins {
-    id("org.springframework.boot") version "3.0.5"
-    id("io.spring.dependency-management") version "1.1.0"
-    kotlin("jvm") version "1.7.22"
-    kotlin("plugin.spring") version "1.7.22"
+    id("org.springframework.boot") version Versions.springBoot
+    id("io.spring.dependency-management") version Versions.springDependencyManagement
+    kotlin("jvm") version Versions.kotlin
+    kotlin("plugin.spring") version Versions.kotlin
 }
 
 repositories {
     mavenCentral()
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        maven("https://jitpack.io")
+    }
 }
 
 subprojects {
@@ -33,6 +40,9 @@ subprojects {
         implementation("org.springframework.boot:spring-boot-starter")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
+        testImplementation("io.kotest:kotest-runner-junit5:${Versions.kotest}")
+        testImplementation("io.kotest:kotest-assertions-core:${Versions.kotest}")
+        testImplementation("io.mockk:mockk:${Versions.mockk}")
     }
 
     tasks.withType<KotlinCompile> {
