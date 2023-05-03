@@ -1,4 +1,4 @@
-package com.yellowsunn.ratelimiterboard.config
+package com.yellowsunn.ratelimiter.config
 
 import com.yellowsunn.ratelimits.RateLimiter
 import com.yellowsunn.ratelimits.RateLimiterFactory

@@ -1,23 +1,22 @@
-package com.yellowsunn.ratelimiterboard.interceptor
+package com.yellowsunn.ratelimiter.interceptor
 
-import com.yellowsunn.ratelimiterboard.const.IP_PATTERN
-import com.yellowsunn.ratelimiterboard.const.X_FORWARDED_FOR
-import com.yellowsunn.ratelimiterboard.utils.RateLimit
-import com.yellowsunn.ratelimiterboard.utils.RateLimiterType
-import com.yellowsunn.ratelimiterboard.utils.RateLimiterType.ALL
-import com.yellowsunn.ratelimiterboard.utils.RateLimiterType.IP
-import com.yellowsunn.ratelimiterboard.utils.RateLimits
+import com.yellowsunn.ratelimiter.const.X_FORWARDED_FOR
+import com.yellowsunn.ratelimiter.utils.RateLimit
+import com.yellowsunn.ratelimiter.utils.RateLimiterType
+import com.yellowsunn.ratelimiter.utils.RateLimiterType.ALL
+import com.yellowsunn.ratelimiter.utils.RateLimiterType.IP
+import com.yellowsunn.ratelimiter.utils.RateLimits
 import com.yellowsunn.ratelimits.RateLimitRule
 import com.yellowsunn.ratelimits.RateLimiter
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import java.time.Duration
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.method.HandlerMethod
 import org.springframework.web.servlet.HandlerInterceptor
+import java.time.Duration
 
 @Component
 class RateLimitInterceptor(
@@ -70,17 +69,10 @@ class RateLimitInterceptor(
 
             IP -> {
                 val clientIp: String = request.getHeader(X_FORWARDED_FOR)
-                    ?.trim()
-                    ?.let { getFirstIpAddress(it) }
                     ?: request.remoteAddr
 
                 "uri:${request.requestURI}_ip:$clientIp"
             }
         }
-    }
-
-    private fun getFirstIpAddress(xForwardedForHeader: String): String? {
-        val regex = Regex(IP_PATTERN)
-        return regex.find(xForwardedForHeader)?.groups?.firstOrNull()?.value
     }
 }

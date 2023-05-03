@@ -1,4 +1,4 @@
-package com.yellowsunn.ratelimiterboard.utils
+package com.yellowsunn.ratelimiter.utils
 
 import java.util.concurrent.TimeUnit
 

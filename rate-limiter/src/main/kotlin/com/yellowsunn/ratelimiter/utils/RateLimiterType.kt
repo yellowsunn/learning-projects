@@ -1,4 +1,4 @@
-package com.yellowsunn.ratelimiterboard.utils
+package com.yellowsunn.ratelimiter.utils
 
 enum class RateLimiterType {
     ALL,
