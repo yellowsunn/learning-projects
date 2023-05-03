@@ -5,15 +5,14 @@ import com.yellowsunn.ratelimiter.utils.RateLimiterType.ALL
 import com.yellowsunn.ratelimiter.utils.RateLimiterType.IP
 import java.util.concurrent.TimeUnit
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class HelloController {
-    // 1분동안 100개의 요청만 수용
-    @RateLimit(type = ALL, capacity = 100, duration = 1, timeUnit = TimeUnit.MINUTES)
+    // 10초 동안 최대 20개의 요청만 수용
+    @RateLimit(type = ALL, capacity = 20, duration = 10, timeUnit = TimeUnit.SECONDS)
     @GetMapping("/hello")
-    fun hello(@RequestParam(required = false) testParam: String): String {
+    fun hello(): String {
         return "hello"
     }
 
