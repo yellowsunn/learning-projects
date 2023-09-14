@@ -14,7 +14,10 @@ plugins {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+
+    // graphql
     implementation("org.springframework.boot:spring-boot-starter-graphql")
+    implementation("com.graphql-java:graphql-java-extended-scalars:19.1")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 

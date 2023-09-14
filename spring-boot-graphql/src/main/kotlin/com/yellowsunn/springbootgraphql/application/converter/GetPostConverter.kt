@@ -9,9 +9,9 @@ import org.mapstruct.Mapping
 import org.mapstruct.factory.Mappers
 
 @Mapper
-interface PostConverter {
+interface GetPostConverter {
     companion object {
-        val INSTANCE: PostConverter = Mappers.getMapper(PostConverter::class.java)
+        val INSTANCE: GetPostConverter = Mappers.getMapper(GetPostConverter::class.java)
     }
 
     @Mapping(source = "post.id", target = "id")

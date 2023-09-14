@@ -1,6 +1,7 @@
 package com.yellowsunn.springbootgraphql.application
 
-import com.yellowsunn.springbootgraphql.application.converter.PostConverter
+import com.yellowsunn.springbootgraphql.application.converter.GetPostConverter
+import com.yellowsunn.springbootgraphql.application.dto.GetPostCommand
 import com.yellowsunn.springbootgraphql.application.dto.PostDto
 import com.yellowsunn.springbootgraphql.domain.Comment
 import com.yellowsunn.springbootgraphql.domain.Post
@@ -16,19 +17,41 @@ class PostService(
     private val commentHttpClient: CommentHttpClient,
     private val userHttpClient: UserHttpClient,
 ) {
-    fun getPostById(postId: Long): PostDto {
+    fun getPostById(command: GetPostCommand): PostDto {
         val post: Post = requireNotNull(
-            postHttpClient.findByPostId(postId),
+            postHttpClient.findByPostId(command.postId),
         ) { "게시글을 찾을 수 없습니다." }
 
-        val comments: List<Comment> = commentHttpClient.findComments(postId = post.id)
+        val comments: List<Comment> = findComments(
+            isSelected = command.isCommentsSelected,
+            postId = command.postId,
+        )
 
-        val user: User? = userHttpClient.findUserById(userId = post.userId)
+        val user: User? = findUser(
+            isSelected = command.isUserSelected,
+            userId = post.userId,
+        )
 
-        return PostConverter.INSTANCE.convertToDto(
+        return GetPostConverter.INSTANCE.convertToDto(
             post = post,
             comments = comments,
             user = user,
         )
+    }
+
+    private fun findComments(isSelected: Boolean, postId: Long): List<Comment> {
+        return if (isSelected) {
+            commentHttpClient.findComments(postId = postId)
+        } else {
+            emptyList()
+        }
+    }
+
+    private fun findUser(isSelected: Boolean, userId: Long): User? {
+        return if (isSelected) {
+            userHttpClient.findUserById(userId = userId)
+        } else {
+            null
+        }
     }
 }

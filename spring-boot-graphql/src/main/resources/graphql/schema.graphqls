@@ -1,0 +1,52 @@
+scalar Long
+
+type Query {
+    findPost(id: Long!): Post
+}
+
+type Post {
+    id: Long,
+    title: String,
+    body: String,
+    comments: [Comment],
+    user: User
+}
+
+type Comment {
+    id: Long,
+    postId: Long,
+    name: String,
+    email: Long,
+    body: String
+}
+
+type User {
+    id: Long,
+    name: String,
+    username: String,
+    email: String,
+    address: UserAddress,
+    phone: String,
+    website: String,
+    company: UserCompany
+}
+
+type UserAddress {
+    street: String,
+    suite: String,
+    city: String,
+    zipcode: String,
+    geo: Geography
+}
+
+type Geography {
+    lat: Float,
+    lng: Float
+}
+
+type UserCompany {
+    name: String,
+    catchPhrase: String,
+    bs: String
+}
+
