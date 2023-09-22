@@ -1,6 +1,6 @@
 package com.yellowsunn.springbootgraphql.application.dto
 
-data class PostDto(
+data class GetPostDto(
     val id: Long,
     val title: String,
     val body: String,

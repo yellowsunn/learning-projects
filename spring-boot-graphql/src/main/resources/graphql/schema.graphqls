@@ -1,5 +1,9 @@
 scalar Long
 
+type Mutation {
+    createPost(input: CreatePostInput!): CreatePostPayload
+}
+
 type Query {
     findPost(id: Long!): Post
 }
@@ -50,3 +54,15 @@ type UserCompany {
     bs: String
 }
 
+input CreatePostInput {
+    title: String!,
+    body: String!,
+    userId: Long!
+}
+
+type CreatePostPayload {
+    id: Long,
+    title: String,
+    body: String,
+    userId: Long
+}

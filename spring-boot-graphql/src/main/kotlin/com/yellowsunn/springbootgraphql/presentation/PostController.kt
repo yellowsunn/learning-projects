@@ -1,11 +1,15 @@
 package com.yellowsunn.springbootgraphql.presentation
 
 import com.yellowsunn.springbootgraphql.application.PostService
+import com.yellowsunn.springbootgraphql.application.dto.CreatePostDto
 import com.yellowsunn.springbootgraphql.application.dto.GetPostCommand
-import com.yellowsunn.springbootgraphql.application.dto.PostDto
+import com.yellowsunn.springbootgraphql.application.dto.GetPostDto
+import com.yellowsunn.springbootgraphql.presentation.request.CreatePostRequest
+import com.yellowsunn.springbootgraphql.utils.converter.CreatePostConverter
 import graphql.schema.DataFetchingFieldSelectionSet
 import org.slf4j.LoggerFactory
 import org.springframework.graphql.data.method.annotation.Argument
+import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.stereotype.Controller
 
@@ -19,7 +23,7 @@ class PostController(
     fun findPost(
         @Argument("id") postId: Long,
         selections: DataFetchingFieldSelectionSet,
-    ): PostDto {
+    ): GetPostDto {
         logger.info("fetch post. id={}", postId)
 
         val command = GetPostCommand(
@@ -28,5 +32,14 @@ class PostController(
             isUserSelected = selections.contains("user"),
         )
         return postService.getPostById(command)
+    }
+
+    @MutationMapping
+    fun createPost(
+        @Argument input: CreatePostRequest,
+    ): CreatePostDto {
+        return postService.creatPost(
+            command = CreatePostConverter.INSTANCE.convertRequestToCommand(input),
+        )
     }
 }

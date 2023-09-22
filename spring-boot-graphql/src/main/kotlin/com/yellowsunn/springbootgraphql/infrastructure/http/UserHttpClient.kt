@@ -1,4 +1,4 @@
-package com.yellowsunn.springbootgraphql.infrastructure
+package com.yellowsunn.springbootgraphql.infrastructure.http
 
 import com.yellowsunn.springbootgraphql.domain.User
 import org.springframework.web.bind.annotation.PathVariable

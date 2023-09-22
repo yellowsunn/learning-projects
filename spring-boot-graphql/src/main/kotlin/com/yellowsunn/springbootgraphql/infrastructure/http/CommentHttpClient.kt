@@ -1,4 +1,4 @@
-package com.yellowsunn.springbootgraphql.infrastructure
+package com.yellowsunn.springbootgraphql.infrastructure.http
 
 import com.yellowsunn.springbootgraphql.domain.Comment
 import org.springframework.web.bind.annotation.RequestParam

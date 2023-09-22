@@ -1,8 +1,8 @@
 package com.yellowsunn.springbootgraphql.config
 
-import com.yellowsunn.springbootgraphql.infrastructure.CommentHttpClient
-import com.yellowsunn.springbootgraphql.infrastructure.PostHttpClient
-import com.yellowsunn.springbootgraphql.infrastructure.UserHttpClient
+import com.yellowsunn.springbootgraphql.infrastructure.http.CommentHttpClient
+import com.yellowsunn.springbootgraphql.infrastructure.http.PostHttpClient
+import com.yellowsunn.springbootgraphql.infrastructure.http.UserHttpClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.function.client.WebClient
@@ -15,7 +15,7 @@ class WebClientConfig {
     @Bean
     fun jsonPlaceHolderClient(): WebClient {
         return WebClient.builder()
-            .baseUrl("https://jsonplaceholder.typicode.com/")
+            .baseUrl("http://jsonplaceholder.typicode.com/")
             .build()
     }
 

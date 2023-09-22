@@ -1,6 +1,6 @@
-package com.yellowsunn.springbootgraphql.application.converter
+package com.yellowsunn.springbootgraphql.utils.converter
 
-import com.yellowsunn.springbootgraphql.application.dto.PostDto
+import com.yellowsunn.springbootgraphql.application.dto.GetPostDto
 import com.yellowsunn.springbootgraphql.domain.Comment
 import com.yellowsunn.springbootgraphql.domain.Post
 import com.yellowsunn.springbootgraphql.domain.User
@@ -17,9 +17,9 @@ interface GetPostConverter {
     @Mapping(source = "post.id", target = "id")
     @Mapping(source = "post.title", target = "title")
     @Mapping(source = "post.body", target = "body")
-    fun convertToDto(
+    fun convertDomainsToDto(
         post: Post,
         comments: List<Comment>,
         user: User?,
-    ): PostDto
+    ): GetPostDto
 }
