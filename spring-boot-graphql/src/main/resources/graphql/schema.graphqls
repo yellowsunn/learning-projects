@@ -2,6 +2,7 @@ scalar Long
 
 type Mutation {
     createPost(input: CreatePostInput!): CreatePostPayload
+    updatePost(input: UpdatePostInput!): UpdatePostPayload
 }
 
 type Query {
@@ -60,7 +61,20 @@ input CreatePostInput {
     userId: Long!
 }
 
+input UpdatePostInput {
+    id: Long!,
+    newTitle: String,
+    newBody: String
+}
+
 type CreatePostPayload {
+    id: Long,
+    title: String,
+    body: String,
+    userId: Long
+}
+
+type UpdatePostPayload {
     id: Long,
     title: String,
     body: String,

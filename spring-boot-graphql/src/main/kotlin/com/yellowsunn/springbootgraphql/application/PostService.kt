@@ -1,15 +1,13 @@
 package com.yellowsunn.springbootgraphql.application
 
-import com.yellowsunn.springbootgraphql.application.dto.CreatePostCommand
-import com.yellowsunn.springbootgraphql.application.dto.CreatePostDto
-import com.yellowsunn.springbootgraphql.application.dto.GetPostCommand
-import com.yellowsunn.springbootgraphql.application.dto.GetPostDto
+import com.yellowsunn.springbootgraphql.application.dto.*
 import com.yellowsunn.springbootgraphql.domain.Comment
 import com.yellowsunn.springbootgraphql.domain.Post
 import com.yellowsunn.springbootgraphql.domain.User
 import com.yellowsunn.springbootgraphql.infrastructure.http.CommentHttpClient
 import com.yellowsunn.springbootgraphql.infrastructure.http.PostHttpClient
 import com.yellowsunn.springbootgraphql.infrastructure.http.UserHttpClient
+import com.yellowsunn.springbootgraphql.infrastructure.http.request.UpdatePostHttpRequest
 import com.yellowsunn.springbootgraphql.utils.converter.CreatePostConverter
 import com.yellowsunn.springbootgraphql.utils.converter.GetPostConverter
 import org.springframework.stereotype.Service
@@ -52,6 +50,30 @@ class PostService(
         )
 
         return CreatePostConverter.INSTANCE.convertDomainToDto(post)
+    }
+
+    fun updatePost(command: UpdatePostCommand): UpdatePostDto {
+        val post: Post = postHttpClient.findByPostId(command.postId)
+            ?: throw IllegalArgumentException("게시글을 찾을 수 없습니다.")
+
+        post.update(
+            newTitle = command.newTitle,
+            newBody = command.newBody,
+        )
+
+        val updatedPost = postHttpClient.updateBoyPostId(
+            postId = post.id,
+            request = UpdatePostHttpRequest(
+                title = post.title,
+                body = post.body,
+            ),
+        )
+        return UpdatePostDto(
+            id = updatedPost.id,
+            title = updatedPost.title,
+            body = updatedPost.body,
+            userId = updatedPost.userId,
+        )
     }
 
     private fun findComments(postId: Long, isSelected: Boolean = true): List<Comment> {

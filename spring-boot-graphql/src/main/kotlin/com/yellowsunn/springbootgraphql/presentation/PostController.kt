@@ -4,7 +4,9 @@ import com.yellowsunn.springbootgraphql.application.PostService
 import com.yellowsunn.springbootgraphql.application.dto.CreatePostDto
 import com.yellowsunn.springbootgraphql.application.dto.GetPostCommand
 import com.yellowsunn.springbootgraphql.application.dto.GetPostDto
+import com.yellowsunn.springbootgraphql.application.dto.UpdatePostDto
 import com.yellowsunn.springbootgraphql.presentation.request.CreatePostRequest
+import com.yellowsunn.springbootgraphql.presentation.request.UpdatePostRequest
 import com.yellowsunn.springbootgraphql.utils.converter.CreatePostConverter
 import graphql.schema.DataFetchingFieldSelectionSet
 import org.slf4j.LoggerFactory
@@ -40,6 +42,15 @@ class PostController(
     ): CreatePostDto {
         return postService.creatPost(
             command = CreatePostConverter.INSTANCE.convertRequestToCommand(input),
+        )
+    }
+
+    @MutationMapping
+    fun updatePost(
+        @Argument input: UpdatePostRequest,
+    ): UpdatePostDto {
+        return postService.updatePost(
+            input.convertToCommand(),
         )
     }
 }
