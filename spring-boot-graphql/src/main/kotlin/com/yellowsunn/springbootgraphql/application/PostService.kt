@@ -7,9 +7,9 @@ import com.yellowsunn.springbootgraphql.domain.User
 import com.yellowsunn.springbootgraphql.infrastructure.http.CommentHttpClient
 import com.yellowsunn.springbootgraphql.infrastructure.http.PostHttpClient
 import com.yellowsunn.springbootgraphql.infrastructure.http.UserHttpClient
-import com.yellowsunn.springbootgraphql.infrastructure.http.request.UpdatePostHttpRequest
 import com.yellowsunn.springbootgraphql.utils.converter.CreatePostConverter
 import com.yellowsunn.springbootgraphql.utils.converter.GetPostConverter
+import com.yellowsunn.springbootgraphql.utils.converter.UpdatePostConverter
 import org.springframework.stereotype.Service
 
 @Service
@@ -63,17 +63,10 @@ class PostService(
 
         val updatedPost = postHttpClient.updateBoyPostId(
             postId = post.id,
-            request = UpdatePostHttpRequest(
-                title = post.title,
-                body = post.body,
-            ),
+            request = UpdatePostConverter.INSTANCE.convertDomainToHttpRequest(post),
         )
-        return UpdatePostDto(
-            id = updatedPost.id,
-            title = updatedPost.title,
-            body = updatedPost.body,
-            userId = updatedPost.userId,
-        )
+
+        return UpdatePostConverter.INSTANCE.convertDomainToDto(updatedPost)
     }
 
     private fun findComments(postId: Long, isSelected: Boolean = true): List<Comment> {
